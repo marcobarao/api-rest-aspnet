@@ -1,0 +1,9 @@
+﻿CREATE TABLE `persons` (
+	`Id` INT(10) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	`Nome` VARCHAR(100),
+	`CPF` VARCHAR(14),
+	`Email` VARCHAR(100),
+	`Telefone` VARCHAR(15),
+	`Sexo` CHAR,
+	`DataNascimento` DATE
+) ENGINE=InnoDB;

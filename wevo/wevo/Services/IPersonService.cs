@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using wevo.Models;
+using wevo.Model;
 
 namespace wevo.Services
 {

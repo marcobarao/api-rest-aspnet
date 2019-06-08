@@ -1,61 +1,78 @@
 ﻿using System;
 using System.Collections.Generic;
-using wevo.Models;
+using System.Linq;
+using wevo.Model;
+using wevo.Model.Context;
 
 namespace wevo.Services.Implementation
 {
     public class PersonServiceImplementation : IPersonService
     {
+        private MySQLContext _context;
+
+        public PersonServiceImplementation(MySQLContext context)
+        {
+            _context = context;
+        }
+
         public Person Create(Person person)
         {
+            try
+            {
+                _context.Add(person);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
             return person;
         }
 
         public void Delete(Person person)
         {
-        
+            Person result = _context.Persons.SingleOrDefault<Person>(p => p.Id.Equals(person.Id));
+
+            try
+            {
+                if (result != null)
+                {
+                    _context.Persons.Remove(result);
+                    _context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public List<Person> FindAll()
         {
-            List<Person> persons = new List<Person>();
-
-            for (int i = 0; i < 8; i++)
-            {
-                Person person = MockPerson(i);
-                persons.Add(person);
-            }
-
-            return persons;
+            return _context.Persons.ToList<Person>();
         }
 
         public Person FindById(long id)
         {
-            return new Person {
-                Id = 1,
-                Nome = "Marco Antônio Barão Neves",
-                Email = "marco.barao@outlook.com",
-                Telefone = "11 97070-7070",
-                Sexo = 'M',
-                DataNascimento = new DateTime(2000, 5, 16)
-            };
+            return _context.Persons.SingleOrDefault<Person>(p => p.Id.Equals(id));
         }
 
         public Person Update(Person person)
         {
-            return person;
-        }
-        private Person MockPerson(int i)
-        {
-            return new Person
+            Person result = _context.Persons.SingleOrDefault<Person>(p => p.Id.Equals(person.Id));
+
+            if (result == null) return new Person();
+
+            try
             {
-                Id = i,
-                Nome = "Person Name " + i,
-                Email = i + "person@person.com",
-                Telefone = "11 97070-707" + i,
-                Sexo = 'M',
-                DataNascimento = new DateTime(2000, 5, 11)
-            };
+                _context.Entry(result).CurrentValues.SetValues(person);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return person;
         }
     }
 }

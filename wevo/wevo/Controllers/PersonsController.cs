@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using wevo.Models;
+using wevo.Model;
 using wevo.Services;
 
 namespace wevo.Controllers

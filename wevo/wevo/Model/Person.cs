@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace wevo.Models
+namespace wevo.Model
 {
     public class Person
     {
-        public long Id { get; set; }
+        public long? Id { get; set; }
         public string Nome { get; set; }
         public string Email { get; set; }
         public string Telefone { get; set; }
