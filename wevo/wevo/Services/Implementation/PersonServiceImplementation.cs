@@ -54,7 +54,7 @@ namespace wevo.Services.Implementation
                 Email = i + "person@person.com",
                 Telefone = "11 97070-707" + i,
                 Sexo = 'M',
-                DataNascimento = new DateTime(2000, 5, i)
+                DataNascimento = new DateTime(2000, 5, 11)
             };
         }
     }
