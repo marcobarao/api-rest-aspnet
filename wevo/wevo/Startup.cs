@@ -7,9 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
-using wevo.HyperMedia;
 using Swashbuckle.AspNetCore.Swagger;
-using Tapioca.HATEOAS;
 using wevo.Business;
 using wevo.Business.Implementation;
 using wevo.Model.Context;
@@ -43,10 +41,6 @@ namespace wevo
             })
             .AddXmlDataContractSerializerFormatters()
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-            var filterOptions = new HyperMediaFilterOptions();
-            filterOptions.ObjectContentResponseEnricherList.Add(new PersonEnricher());
-            services.AddSingleton(filterOptions);
 
             services.AddApiVersioning();
             services.AddSwaggerGen(c =>
@@ -87,13 +81,7 @@ namespace wevo
             option.AddRedirect("^$", "swagger");
             app.UseRewriter(option);
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "DefaultApi",
-                    template: "{controller=Values}/{id?}"
-                );
-            });
+            app.UseMvc();
         }
     }
 }
