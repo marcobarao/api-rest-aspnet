@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Tapioca.HATEOAS.Utils;
 using wevo.Data.Converters;
 using wevo.Data.VO;
 using wevo.Model;
@@ -30,9 +31,21 @@ namespace wevo.Business.Implementation
             _repository.Delete(personEntity);
         }
 
-        public List<PersonVO> FindAll()
+        public PagedSearchDTO<PersonVO> FindAll(string sortDirection, int pageSize, int page)
         {
-            return _converter.ParseList(_repository.FindAll());
+            page = page > 0 ? page - 1 : 0;
+            string query = $"SELECT * FROM people p ORDER BY p.id {sortDirection} limit {pageSize} offset {page * pageSize}";
+            var people = _converter.ParseList(_repository.FindAll(query));
+            int totalResults = _repository.GetCount();
+
+            return new PagedSearchDTO<PersonVO>
+            {
+                CurrentPage = page + 1,
+                List = people,
+                PageSize = pageSize,
+                SortDirections = sortDirection,
+                TotalResults = totalResults
+            };
         }
 
         public PersonVO FindById(long id)

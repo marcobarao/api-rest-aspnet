@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using wevo.Model;
@@ -47,9 +48,14 @@ namespace wevo.Repository.Implementation
             }
         }
 
-        public List<Person> FindAll()
+        public List<Person> FindAll(string query)
         {
-            return _context.People.ToList<Person>();
+            return _context.People.FromSql<Person>(query).ToList();
+        }
+
+        public int GetCount()
+        {
+            return _context.People.ToList().Count();
         }
 
         public Person FindById(long id)

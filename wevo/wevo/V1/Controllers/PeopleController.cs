@@ -25,9 +25,9 @@ namespace wevo.Controllers
         [SwaggerResponse(400)]
         [SwaggerResponse(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
-        public IActionResult Get()
+        public IActionResult Get([FromQuery] string sortDirection = "ASC", [FromQuery] int pageSize = 15, [FromQuery] int page = 1)
         {
-            return Ok(_peopleBusiness.FindAll());
+            return new OkObjectResult(_peopleBusiness.FindAll(sortDirection, pageSize, page));
         }
 
         [HttpGet("{id}")]
@@ -41,7 +41,7 @@ namespace wevo.Controllers
             PersonVO People = _peopleBusiness.FindById(id);
 
             if (People == null) return NotFound();
-            return Ok(People);
+            return new OkObjectResult(People);
         }
 
         [HttpPost]
@@ -52,7 +52,7 @@ namespace wevo.Controllers
         public IActionResult Post([FromBody]PersonVO person)
         {
             if (person == null) return BadRequest();
-            return new ObjectResult(_peopleBusiness.Create(person));
+            return new OkObjectResult(_peopleBusiness.Create(person));
         }
 
         [HttpPut]
@@ -65,7 +65,7 @@ namespace wevo.Controllers
             if (person == null) return BadRequest();
             PersonVO updatedPerson = _peopleBusiness.Update(person);
             if (updatedPerson == null) return BadRequest();
-            return new ObjectResult(updatedPerson);
+            return new OkObjectResult(updatedPerson);
         }
 
         [HttpDelete]

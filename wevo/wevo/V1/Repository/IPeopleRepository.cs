@@ -7,8 +7,9 @@ namespace wevo.Repository
     {
         Person Create(Person person);
         Person FindById(long id);
-        List<Person> FindAll();
+        List<Person> FindAll(string query);
         Person Update(Person person);
         void Delete(Person person);
+        int GetCount();
     }
 }

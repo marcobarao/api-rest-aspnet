@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Tapioca.HATEOAS;
 using wevo.Data.VO;
 
-namespace wevo.Hypermedia
+namespace wevo.HyperMedia
 {
     public class PersonEnricher : ObjectContentResponseEnricher<PersonVO>
     {
         protected override Task EnrichModel(PersonVO content, IUrlHelper urlHelper)
         {
-            string path = "api/v1/people";
+            var path = "api/v1/people";
             var url = new { controller = path, id = content.Id };
 
             content.Links.Add(new HyperMediaLink()
@@ -19,7 +19,6 @@ namespace wevo.Hypermedia
                 Rel = RelationType.self,
                 Type = ResponseTypeFormat.DefaultGet
             });
-
             content.Links.Add(new HyperMediaLink()
             {
                 Action = HttpActionVerb.POST,
@@ -27,7 +26,6 @@ namespace wevo.Hypermedia
                 Rel = RelationType.self,
                 Type = ResponseTypeFormat.DefaultPost
             });
-
             content.Links.Add(new HyperMediaLink()
             {
                 Action = HttpActionVerb.PUT,
@@ -35,7 +33,6 @@ namespace wevo.Hypermedia
                 Rel = RelationType.self,
                 Type = ResponseTypeFormat.DefaultPost
             });
-
             content.Links.Add(new HyperMediaLink()
             {
                 Action = HttpActionVerb.DELETE,
@@ -43,7 +40,6 @@ namespace wevo.Hypermedia
                 Rel = RelationType.self,
                 Type = ResponseTypeFormat.DefaultPost
             });
-
             return null;
         }
     }

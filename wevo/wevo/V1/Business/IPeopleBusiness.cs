@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using Tapioca.HATEOAS.Utils;
 using wevo.Data.VO;
+using wevo.Model;
 
 namespace wevo.Business
 {
@@ -7,7 +9,7 @@ namespace wevo.Business
     {
         PersonVO Create(PersonVO person);
         PersonVO FindById(long id);
-        List<PersonVO> FindAll();
+        PagedSearchDTO<PersonVO> FindAll(string sortDirection, int pageSize, int page);
         PersonVO Update(PersonVO person);
         void Delete(PersonVO person);
     }
