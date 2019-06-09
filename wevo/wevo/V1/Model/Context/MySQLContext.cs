@@ -15,6 +15,6 @@ namespace wevo.Model.Context
 
         public MySQLContext(DbContextOptions<MySQLContext> options) : base(options) {}
 
-        public DbSet<Person> Persons { get; set; }
+        public DbSet<Person> People { get; set; }
     }
 }

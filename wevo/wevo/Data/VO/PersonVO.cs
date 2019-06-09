@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace wevo.Model
+namespace wevo.Data.VO
 {
-    public class Person
+    public class PersonVO
     {
         public long? Id { get; set; }
         public string Nome { get; set; }

@@ -4,13 +4,13 @@ using System.Linq;
 using wevo.Model;
 using wevo.Model.Context;
 
-namespace wevo.Services.Implementation
+namespace wevo.Repository.Implementation
 {
-    public class PersonServiceImplementation : IPersonService
+    public class PeopleRepository : IPeopleRepository
     {
         private MySQLContext _context;
 
-        public PersonServiceImplementation(MySQLContext context)
+        public PeopleRepository(MySQLContext context)
         {
             _context = context;
         }
@@ -31,13 +31,13 @@ namespace wevo.Services.Implementation
 
         public void Delete(Person person)
         {
-            Person result = _context.Persons.SingleOrDefault<Person>(p => p.Id.Equals(person.Id));
+            Person result = _context.People.SingleOrDefault<Person>(p => p.Id.Equals(person.Id));
 
             try
             {
                 if (result != null)
                 {
-                    _context.Persons.Remove(result);
+                    _context.People.Remove(result);
                     _context.SaveChanges();
                 }
             }
@@ -49,19 +49,19 @@ namespace wevo.Services.Implementation
 
         public List<Person> FindAll()
         {
-            return _context.Persons.ToList<Person>();
+            return _context.People.ToList<Person>();
         }
 
         public Person FindById(long id)
         {
-            return _context.Persons.SingleOrDefault<Person>(p => p.Id.Equals(id));
+            return _context.People.SingleOrDefault<Person>(p => p.Id.Equals(id));
         }
 
         public Person Update(Person person)
         {
-            Person result = _context.Persons.SingleOrDefault<Person>(p => p.Id.Equals(person.Id));
+            Person result = _context.People.SingleOrDefault<Person>(p => p.Id.Equals(person.Id));
 
-            if (result == null) return new Person();
+            if (result == null) return null;
 
             try
             {
@@ -72,6 +72,7 @@ namespace wevo.Services.Implementation
             {
                 throw ex;
             }
+
             return person;
         }
     }

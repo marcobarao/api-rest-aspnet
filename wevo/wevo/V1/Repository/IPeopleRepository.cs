@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using wevo.Model;
 
-namespace wevo.Services
+namespace wevo.Repository
 {
-    public interface IPersonService
+    public interface IPeopleRepository
     {
         Person Create(Person person);
         Person FindById(long id);
