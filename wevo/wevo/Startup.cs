@@ -1,13 +1,17 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
+using Swashbuckle.AspNetCore.Swagger;
+using Tapioca.HATEOAS;
 using wevo.Business;
 using wevo.Business.Implementation;
+using wevo.Hypermedia;
 using wevo.Model.Context;
 using wevo.Repository;
 using wevo.Repository.Implementation;
@@ -39,7 +43,23 @@ namespace wevo
             })
             .AddXmlDataContractSerializerFormatters()
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            var filterOptions = new HyperMediaFilterOptions();
+            filterOptions.ObjectContentResponseEnricherList.Add(new PersonEnricher());
+            services.AddSingleton(filterOptions);
+
             services.AddApiVersioning();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc(
+                    "v1",
+                    new Info
+                    {
+                        Title = "RESTful API Wevo",
+                        Version = "v1"
+                    }
+                );
+            });
             services.AddScoped<IPeopleRepository, PeopleRepository>();
             services.AddScoped<IPeopleBusiness, PeopleBusiness>();
         }
@@ -57,7 +77,23 @@ namespace wevo
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Wevo API V1");
+            });
+
+            var option = new RewriteOptions();
+            option.AddRedirect("^$", "swagger");
+            app.UseRewriter(option);
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "DefaultApi",
+                    template: "{controller=Values}/{id?}"
+                );
+            });
         }
     }
 }

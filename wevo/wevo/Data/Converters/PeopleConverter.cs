@@ -18,6 +18,7 @@ namespace wevo.Data.Converters
             {
                 Id = origin.Id,
                 Nome = origin.Nome,
+                CPF = origin.CPF,
                 Email = origin.Email,
                 Telefone = origin.Telefone,
                 Sexo = origin.Sexo,
@@ -33,6 +34,7 @@ namespace wevo.Data.Converters
             {
                 Id = origin.Id,
                 Nome = origin.Nome,
+                CPF = origin.CPF,
                 Email = origin.Email,
                 Telefone = origin.Telefone,
                 Sexo = origin.Sexo,

@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="V1\db\dataset\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
@@ -17,7 +16,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.1" PrivateAssets="All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.1" />
     <PackageReference Include="MySql.Data" Version="8.0.16" />
+    <PackageReference Include="NSwag.Core" Version="12.3.1" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="2.5.0" />
     <PackageReference Include="Tapioca.HATEOAS" Version="1.0.4" />
   </ItemGroup>
 
